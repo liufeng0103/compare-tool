@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -53,6 +55,16 @@ public abstract class CompareFile implements Closeable {
 		}
 		throw new RuntimeException(
 			String.format("Error, Not found column[%s] on sheet[%s]", columnName, sheetName));
+	}
+
+	public CompareRow convertToCompareRow(Row row) {
+		CompareRow row1 = new CompareRow();
+		row1.setRowNum(row.getRowNum());
+		for (Cell cell : row) {
+			CompareCell compareCell = row1.createCell(cell.getColumnIndex());
+			compareCell.setStringCellValue(cell.getStringCellValue());
+		}
+		return row1;
 	}
 	
 	public abstract CompareSheet getCompareSheet(String sheetName) throws CompareToolException;

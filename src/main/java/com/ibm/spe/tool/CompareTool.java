@@ -61,13 +61,13 @@ public class CompareTool {
 				List<CompareColumnMapping> columnMappings = getColumnMappings(compareType, sheetMapping.getSheet1(), titleRow1, titleRow2);
 				logger.info("Compare columns " + columnMappings);
 				
-				Map<String, Row> rows1 = sheet1.getRows();
-				Map<String, Row> rows2 = sheet2.getRows();
+				Map<String, CompareRow> rows1 = sheet1.getRows();
+				Map<String, CompareRow> rows2 = sheet2.getRows();
 				rows1.forEach((key1, row1) -> {
 					if (FM.equals(compareType)) {
 						key1 = convertKey(key1);
 					}
-					Row row2 = rows2.get(key1);
+					CompareRow row2 = rows2.get(key1);
 					if (row2 == null) {
 						resultFile.info(key1, " not found in file " + new File(toFile).getName(), String.valueOf(row1.getRowNum() + 1), "Not Found");
                         if (MM.equals(compareType) && !sheet1.getSeperatedKeys().contains(key1)) {
@@ -78,8 +78,8 @@ public class CompareTool {
 					} else {
 						int errorColumnCount = 0;
 						for (CompareColumnMapping columnMapping : columnMappings) {
-							Cell cell1 = row1.getCell(columnMapping.getColumn1Index());
-							Cell cell2 = row2.getCell(columnMapping.getColumn2Index());
+							CompareCell cell1 = row1.getCell(columnMapping.getColumn1Index());
+							CompareCell cell2 = row2.getCell(columnMapping.getColumn2Index());
 							String cellValue1 = cell1 == null ? "" : cell1.getStringCellValue().trim();
 							String cellValue2 =  cell2 == null ? "" : cell2.getStringCellValue().trim();
 							if (!cellValue1.equals(cellValue2)) {

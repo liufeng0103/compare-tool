@@ -44,7 +44,7 @@ public class FinancialFile extends CompareFile {
 				isSpecialSheet = true;
 				logger.info("Special sheet {}", sheetName);
 			}
-			Map<String, Row> rows = new HashMap<>();
+			Map<String, CompareRow> rows = new HashMap<>();
 			for (Row row : sheet) {
 				if (row.getRowNum() == 0) { // first row
 					compareSheet.setTitleRow(row);
@@ -55,9 +55,9 @@ public class FinancialFile extends CompareFile {
 						if (key != null && !"".equals(key)) {
 							totalRowNum++;
 							if (isSpecialSheet) {
-								rows.put(generateKey(sheetName, compareSheet.getTitleRow(), row), row);
+								rows.put(generateKey(sheetName, compareSheet.getTitleRow(), row), convertToCompareRow(row));
 							} else {
-								rows.put(key, row);
+								rows.put(key, convertToCompareRow(row));
 							}
 						} else {
 							logger.warn("Ignore empty key at index A row {}", row.getRowNum() + 1);

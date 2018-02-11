@@ -51,7 +51,7 @@ public class MrtFile extends CompareFile {
 				isSpecialSheet = true;
 				logger.info("Special sheet {}", sheetName);
 			}
-			Map<String, Row> rows = new HashMap<>();
+			Map<String, CompareRow> rows = new HashMap<>();
 			for (Row row : sheet) {
 				if (row.getRowNum() == 0) { // first row
 					compareSheet.setTitleRow(row);
@@ -63,13 +63,13 @@ public class MrtFile extends CompareFile {
 							totalRowNum++;
 							if (isSpecialSheet) {
 								String[] keys = generateKey(key, row, sheetName);
-								rows.put(keys[0], row);
+								rows.put(keys[0], convertToCompareRow(row));
 								if (!keys[0].equals(keys[1])) {
-									rows.put(keys[1], row);
+									rows.put(keys[1], convertToCompareRow(row));
 									seperatedKeys.add(keys[0]);
 								}
 							} else {
-								rows.put(key, row);
+								rows.put(key, convertToCompareRow(row));
 							}
 						} else {
 							logger.warn("Ignore empty key at index A row {}", row.getRowNum() + 1);

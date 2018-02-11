@@ -6,7 +6,7 @@ import java.util.Set;
 import org.apache.poi.ss.usermodel.Row;
 
 public class CompareSheet {
-	private Map<String, Row> rows;
+	private Map<String, CompareRow> rows;
 	private Row titleRow;
 	private String sheetName;
 	private int totalRows;
@@ -16,11 +16,11 @@ public class CompareSheet {
 		this.sheetName = sheetName;
 	}
 
-	public Map<String, Row> getRows() {
+	public Map<String, CompareRow> getRows() {
 		return rows;
 	}
 
-	public void setRows(Map<String, Row> rows) {
+	public void setRows(Map<String, CompareRow> rows) {
 		this.rows = rows;
 	}
 
