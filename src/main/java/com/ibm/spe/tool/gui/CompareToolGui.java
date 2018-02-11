@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -99,6 +102,14 @@ public class CompareToolGui extends JFrame {
             mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             mainFrame.setVisible(true);
         });
+        System.out.println(Runtime.getRuntime().maxMemory());
+        Properties properties = System.getProperties();  
+        Iterator it =  properties.entrySet().iterator();  
+        while(it.hasNext()) {  
+            Entry entry = (Entry)it.next();  
+            System.out.print(entry.getKey()+"=");  
+            System.out.println(entry.getValue());  
+        }
     }
 }
 

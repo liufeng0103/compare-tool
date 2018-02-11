@@ -64,6 +64,9 @@ public class CompareTool {
 				Map<String, Row> rows1 = sheet1.getRows();
 				Map<String, Row> rows2 = sheet2.getRows();
 				rows1.forEach((key1, row1) -> {
+					if (FM.equals(compareType)) {
+						key1 = convertKey(key1);
+					}
 					Row row2 = rows2.get(key1);
 					if (row2 == null) {
 						resultFile.info(key1, " not found in file " + new File(toFile).getName(), String.valueOf(row1.getRowNum() + 1), "Not Found");
@@ -128,6 +131,8 @@ public class CompareTool {
 					if (summary.getTotalErrorRowCount() > maxErrorCount) {
 						throw new RuntimeException("More than " + maxErrorCount + " errors, pleae check your files");
 					}
+//					rows1.put(key1, null);
+//					rows2.put(key1, null);
 				});
 				L.info("Found " + summary.getTotalErrorRowCount() + " errors on sheet " + sheetMapping.getSheet1());
 				resultFile.setSheetCompareResult(summary);
@@ -231,6 +236,19 @@ public class CompareTool {
 		}
 	}
 	
+	/**
+     * USG to US
+     * @return
+     */
+	private static String convertKey(String key) {
+    	if(key.length() >= 3) {
+    		if("USG".equals(key.substring(0,3))) {
+                key = "US" + key.substring(3);
+            }
+    	}
+        return key;
+    }
+    
 	public static void main(String[] args) {
 		try {
 			CompareTool.process("mrt1.xlsx", "mrt2.xlsx", MM);

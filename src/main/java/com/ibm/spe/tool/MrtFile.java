@@ -30,7 +30,7 @@ public class MrtFile extends CompareFile {
     }
 	
 	private String path;
-	private boolean needConvertSOITS = "yes".equalsIgnoreCase(ConfigUtils.getProperty("convert_soits"));
+	private boolean needConvertSOITS = "yes".equalsIgnoreCase(ConfigUtils.getProperty("convert_soits", "yes"));
 	private Map<String, String> soItsMap = CompareConfigFile.getSoItsMap();
 	
 	public MrtFile(String path) throws CompareToolException {
